@@ -11,6 +11,7 @@ VIDEO_FPS = 30 # how many FPS was teh initial video recorded with
 NUMBER_OF_NOTES = 20 # so many different sound pitches exist
 # LATENCY_COMPENSATION = 8 # how much earlier does the audio play, USE WHEN RECORDING
 LATENCY_COMPENSATION = 0 # how much earlier does the audio play, USE WHEN VIEWING/DEMOING
+# LATENCY_COMPENSATION = -4 # how much later does the audio play, USE WHEN YOUTUBE
 
 
 
@@ -39,7 +40,8 @@ pygame.mixer.init()
 pygame.mixer.set_num_channels(32)
 
 
-sound_file = "pfff.wav"
+# sound_file = "samples/pfff.wav"
+sound_file = "samples/bass-c3.wav"
 sound = pygame.mixer.Sound(sound_file)
 
 # load the sound into an array
@@ -49,7 +51,8 @@ sounds = []
 
 for i in range(NUMBER_OF_NOTES):
 
-    pitch_scaling = .5 + (1.0 * i / NUMBER_OF_NOTES) # 1.0 is the mean
+    # pitch_scaling = .1 + (2.0 * i / NUMBER_OF_NOTES) # this is unrealistic, but gives you more pitch spread
+    pitch_scaling = .8 + (1.0 * i / NUMBER_OF_NOTES) # this is somewhat realistic for one string
 
     # resample. args: (target array, ratio, mode), outputs ratio * target array.
     snd_resample = resample(snd_array, pitch_scaling, "sinc_fastest").astype(snd_array.dtype)
