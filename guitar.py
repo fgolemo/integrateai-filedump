@@ -13,6 +13,7 @@ MIN_DIFFERENCE = 15 # what's the minimum pixel movement required in the last FRA
 NOTE_SHIFT = +2 # where is the left hand note grabbed (negative = earlier in time)
 
 MAX_WRIST_NECK_DIST = 230 # max length between left wrist and neck in pixels, should be calibrated beforehand in live env
+# MAX_WRIST_NECK_DIST = 300 # for gabo3
 
 t = Tracker(DIR, NAME)
 
