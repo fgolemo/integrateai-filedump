@@ -85,23 +85,32 @@ for axis in [ax1, ax2]:
     axis.legend()
 plt.show()
 
-out_matrix = np.array(out)
+out_matrix = np.array(out, dtype=np.float32)
 
 # RESULTS are stored in variable: out and out_matrix
+
+np.savez("{}/out.npz".format(DIR), data=out_matrix)
+
+# # to load the data, use:
+# data = np.load("{}/out.npz".format(DIR))["data"]
 
 import imageio
 import cv2
 from tqdm import tqdm
 boxsize = 20
 reader = imageio.get_reader('{}/result.avi'.format(DIR))
-writer = imageio.get_writer('{}/impacts.mp4'.format(DIR))
+writer = imageio.get_writer('{}/impacts2.mp4'.format(DIR))
+
+TONE_SCALING = 500
+
 
 for idx, im in tqdm(enumerate(reader)):
     if idx in out_matrix[:,0]:
         # plot impact
-        x1, y1, x2, y2 = 0, 0, 200, 200
-
+        note = int(round(out_matrix[out_matrix[:,0] == idx][0,1] * TONE_SCALING))
+        x1, y1, x2, y2 = 0, 0, 200, note
         cv2.rectangle(im, (x1, y1), (x2, y2), (255, 0, 0), -1)
+
 
     writer.append_data(im)
 writer.close()
