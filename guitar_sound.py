@@ -12,6 +12,18 @@ NUMBER_OF_NOTES = 20 # so many different sound pitches exist
 # LATENCY_COMPENSATION = 8 # how much earlier does the audio play, USE WHEN RECORDING
 LATENCY_COMPENSATION = 0 # how much earlier does the audio play, USE WHEN VIEWING/DEMOING
 
+
+
+
+# PLEASE FIRST INSTALL scikits.samplerate
+#
+# sudo apt-get install libsamplerate0-dev
+# sudo pip3 install git+https://github.com/gregorias/samplerate.git
+
+
+
+
+
 data = np.load("{}/out.npz".format(DIR))["data"]
 
 reader = imageio.get_reader('{}/result.avi'.format(DIR))
