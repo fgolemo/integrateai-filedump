@@ -28,6 +28,7 @@ LATENCY_COMPENSATION = 0 # how much earlier does the audio play, USE WHEN VIEWIN
 
 data = np.load("{}/out.npy".format(DIR))
 
+
 reader = imageio.get_reader('{}/result.avi'.format(DIR))
 # writer = imageio.get_writer('{}/testing.mp4'.format(DIR))
 
@@ -46,25 +47,8 @@ for sound_file in os.listdir(sound_dir):
     # pdb.set_trace()
     sounds.append(pygame.mixer.Sound(os.path.join(sound_dir, sound_file)))
 
-# load the sound into an array
-snd_array = pygame.sndarray.array(sound)
 
-# sounds = []
-
-# for i in range(NUMBER_OF_NOTES):
-
-#     pitch_scaling = .5 + (1.0 * i / NUMBER_OF_NOTES) # 1.0 is the mean
-
-#     # resample. args: (target array, ratio, mode), outputs ratio * target array.
-#     snd_resample = resample(snd_array, pitch_scaling, "sinc_fastest").astype(snd_array.dtype)
-
-#     #make the sounds into a pygame obj again
-#     snd_out = pygame.sndarray.make_sound(snd_resample)
-
-#     sounds.append(snd_out)
-
-# invert sounds list (low index = low sound, high index = high sound)
-# sounds = sounds[::-1] # nope, actually not the case... :)
+print ("sound test")
 
 def make_array_to_pygame_img(array):
     return pygame.surfarray.make_surface(array.transpose(1,0,2))
@@ -84,7 +68,7 @@ for idx, im in tqdm(enumerate(reader)):
 
     if idx+LATENCY_COMPENSATION in data[:,0]:
         # plot impact
-        note = int(data[ data[0, :] == idx+LATENCY_COMPENSATION][0, -1])
+        note = int(data[ data[:, 0] == idx+LATENCY_COMPENSATION][0,-1])
         print("\nplaying note: {}".format(note))
         sounds[note-1].play()
 
